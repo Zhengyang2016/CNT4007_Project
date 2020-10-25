@@ -13,7 +13,7 @@ public class HandshakeMessage {
 	
 	public static void startHandshake(Socket socket){
 		try {
-			//String message= header + zeros + setpeerID(setPeerID);
+			//String message= header + zeros;
 			HandshakeMessage message = HandshakeMessage.getInstance();
 			message.setPeerID(getPeerID());
 			ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
