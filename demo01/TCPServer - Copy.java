@@ -28,7 +28,7 @@ public class TCPServer {
                 	//if(peerID != null){
                 		HandshakeMessage.startHandshake(socket);
             		//}
-	                //if(sendHandshakeMessage()) {
+	                //if(startHandshakeMessage()) {
 	                    try {
 	                        InputStream is = socket.getInputStream();
 	
