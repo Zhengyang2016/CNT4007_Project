@@ -11,6 +11,7 @@ public class Config {
 	public String FileName;
 	public int FileSize;
 	public int PieceSize;
+	public int peerIndex;
 	//use arraylist to store peerinfo, each element is a string array of length 4
 	public ArrayList<String[]> peerInfo = new ArrayList<String[]>();
 	
@@ -20,7 +21,7 @@ public class Config {
 		Scanner sc = new Scanner(common);
 		String data = sc.nextLine();//read next line
 		
-		NumberOfPreferredNeighbors = Integer.parseInt(data.split("\\s+")[1]);
+		NumberOfPreferredNeighbors = Integer.parseInt(data.split("\\s+")[1]);//split strings with spaces
 		data = sc.nextLine();
 		UnchokingInterval = Integer.parseInt(data.split("\\s+")[1]);
 		data = sc.nextLine();
@@ -39,12 +40,18 @@ public class Config {
 	}
 
 	//	 this method returns the peerInfo arraylist
-	public ArrayList<String[]> readPeerInfo() {
+	public ArrayList<String[]> readPeerInfo(String peerID) {
 		try {
 			File peer = new File("src/PeerInfo.cfg");
 			Scanner sc = new Scanner(peer);
+			int i = 0;
+			String data;
 			while(sc.hasNextLine()) {
-				peerInfo.add(sc.nextLine().split("\\s+"));
+				data = sc.nextLine();
+				peerInfo.add(data.split("\\s+"));
+				if(data.split("\\s+")[0].equals(peerID))
+					this.peerIndex = i;//determine the position of this peer in the configuration file
+				++i;
 			}
 			sc.close();
 			return(peerInfo);
@@ -52,6 +59,10 @@ public class Config {
 			System.out.println("FileNotFoundException.");
 			return(peerInfo);
 		}
+	}
+	
+	public int getIndex() {
+		return peerIndex;
 	}
 	
 }
