@@ -27,7 +27,7 @@ public class Config {
 		data = sc.nextLine();
 		OptimisticUnchokingInterval = Integer.parseInt(data.split("\\s+")[1]);
 		data = sc.nextLine();
-		FileName = data.split("\\s+")[0];
+		FileName = data.split("\\s+")[1];
 		data = sc.nextLine();
 		FileSize = Integer.parseInt(data.split("\\s+")[1]);
 		data = sc.nextLine();
