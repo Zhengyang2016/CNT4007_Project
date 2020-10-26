@@ -3,16 +3,20 @@ import java.util.ArrayList;
 
 public class peerProcess {
 	public static void main(String[] args) {
+		
 		int NumberOfPreferredNeighbors;
 		int UnchokingInterval;
 		int OptimisticUnchokingInterval;
 		String FileName;
 		int FileSize;
 		int PieceSize;
+		String peerID = args[0];
+		int peerIndex;//the position of this peer in the configuration file
 		
 		ArrayList<String[]> peerInfo = new ArrayList<String[]>();
+		
 		//reading configuration file
-		Config cfg = new Config();
+		Config cfg = new Config();//pass command line input to read config.
 		NumberOfPreferredNeighbors = cfg.NumberOfPreferredNeighbors;
 		System.out.println(NumberOfPreferredNeighbors);
 		UnchokingInterval = cfg.UnchokingInterval;
@@ -26,9 +30,10 @@ public class peerProcess {
 		PieceSize = cfg.PieceSize;
 		System.out.println(PieceSize);
 		
-		peerInfo = cfg.readPeerInfo();
+		peerInfo = cfg.readPeerInfo(peerID);
 		System.out.println(peerInfo.get(5)[0]);
-		
+		peerIndex = cfg.getIndex();
+		System.out.println(peerIndex);
 		
 	}
 }
