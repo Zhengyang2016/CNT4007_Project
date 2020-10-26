@@ -16,7 +16,7 @@ public class Config {
 	
 	public Config() {
 		try {
-		File common = new File("C:\\L\\CNT4007\\project\\peerProcess\\src\\Common.cfg");
+		File common = new File("src/Common.cfg");
 		Scanner sc = new Scanner(common);
 		String data = sc.nextLine();//read next line
 		
@@ -41,7 +41,7 @@ public class Config {
 	//	 this method returns the peerInfo arraylist
 	public ArrayList<String[]> readPeerInfo() {
 		try {
-			File peer = new File("C:\\L\\CNT4007\\project\\peerProcess\\src\\PeerInfo.cfg");
+			File peer = new File("src/PeerInfo.cfg");
 			Scanner sc = new Scanner(peer);
 			while(sc.hasNextLine()) {
 				peerInfo.add(sc.nextLine().split("\\s+"));
