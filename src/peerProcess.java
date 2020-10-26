@@ -1,8 +1,6 @@
 import peerProcess.Config;
 import java.util.ArrayList;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
+
 public class peerProcess {
 	public static void main(String[] args) {
 		int NumberOfPreferredNeighbors;
@@ -13,7 +11,7 @@ public class peerProcess {
 		int PieceSize;
 		
 		ArrayList<String[]> peerInfo = new ArrayList<String[]>();
-		
+		//reading configuration file
 		Config cfg = new Config();
 		NumberOfPreferredNeighbors = cfg.NumberOfPreferredNeighbors;
 		System.out.println(NumberOfPreferredNeighbors);
