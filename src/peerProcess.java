@@ -31,7 +31,7 @@ public class peerProcess {
 		System.out.println(PieceSize);
 		
 		peerInfo = cfg.readPeerInfo(peerID);
-		System.out.println(peerInfo.get(5)[0]);
+		System.out.println(peerInfo.get(3)[0]);
 		peerIndex = cfg.getIndex();
 		System.out.println(peerIndex);
 		
