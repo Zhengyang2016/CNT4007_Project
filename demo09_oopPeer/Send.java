@@ -33,6 +33,7 @@ public class Send implements Runnable{
     //Get input from console
     private String getFromConsole(){
         try {
+        	
             return console.readLine();
         }catch (IOException e){
             e.printStackTrace();
@@ -59,6 +60,8 @@ public class Send implements Runnable{
 
     @Override
     public void run() {
+    	String testmessage = "Test thread can send this at same time";
+    	send(testmessage);
         while (isRunning){
             String msg = getFromConsole();
             if (!msg.equals("")){

@@ -12,8 +12,8 @@ public class Message {
 	public int have;
 	public byte[] bitfield;
 	public int request;
-	public int piece;
-	public byte[] content;
+	public int pieceIndex;
+	public byte[] piece;
 	
 	//constructer needs the socket inputstream.
 	Message(InputStream in){
@@ -101,12 +101,13 @@ public class Message {
 					if(read != -1)
 						bytes[i] = (byte)read;
 				}
-				piece = ByteBuffer.wrap(bytes).getInt();
-				System.out.print(" Piece index: " + piece);
+				pieceIndex = ByteBuffer.wrap(bytes).getInt();
+				System.out.print(" Piece index: " + pieceIndex);
+				piece = new byte[length - 5];
 				for(int i = 0;i<length-5;++i) {
 					read = in.read();
 					if(read != -1)
-						content[i] = (byte)read;
+						piece[i] = (byte)read;
 				}
 				System.out.println("  Piece content read.");
 			}catch(IOException e) {

@@ -35,5 +35,15 @@ public class peerProcess {
 		peerIndex = cfg.getIndex();
 		System.out.println(peerIndex);
 		
+		int bitfieldSize = FileSize/PieceSize;
+		if(FileSize%PieceSize != 0)
+			bitfieldSize += 1;
+		if(bitfieldSize % 8 != 0)
+			bitfieldSize = bitfieldSize/8 + 1;
+		else
+			bitfieldSize = bitfieldSize/8;
+		byte[] bitfield = new byte[bitfieldSize];
+
+		
 	}
 }

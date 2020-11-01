@@ -6,6 +6,7 @@ import java.net.Socket;
 
 public class Peer1 {
     public static void main(String[] args) throws IOException {
+    	
         int peerID = 1;
         ServerSocket serverSocket = new ServerSocket(6666);
 
