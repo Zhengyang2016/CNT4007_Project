@@ -14,15 +14,28 @@ public class SendMessage {
 	public byte[] bitfield = {5};
 	public byte[] request = {0,0,0,5,6};
 	public byte[] piece = {7};
+	String handshake = "P2PFILESHARINGPROJ          ";
+	
 	
 	//create object using socket output stream
 	SendMessage(DataOutputStream out){
 		this.out = out;
 	}
 	
+	public void sendHandshake(String peerID) {
+		try {
+			out.writeBytes(handshake);
+			out.writeBytes(peerID);
+			out.flush();
+		}catch(IOException e) {
+			System.out.println("Send handshake IOException.");
+		}
+	}
+	
 	public void sendChoke() {
 		try {
 			out.write(choke);
+			out.flush();
 		}catch(IOException e) {
 			System.out.println("Send choke IOException.");
 		}
@@ -31,6 +44,7 @@ public class SendMessage {
 	public void sendUnchoke() {
 		try {
 			out.write(unchoke);
+			out.flush();
 		}catch(IOException e) {
 			System.out.println("Send unchoke IOException.");
 		}
@@ -39,6 +53,7 @@ public class SendMessage {
 	public void sendInterested() {
 		try {
 			out.write(interested);
+			out.flush();
 		}catch(IOException e) {
 			System.out.println("Send interested IOException.");
 		}
@@ -56,6 +71,7 @@ public class SendMessage {
 		try {
 			out.write(have);
 			out.writeInt(pieceIndex);
+			out.flush();
 		}catch(IOException e) {
 			System.out.println("Send have IOException.");
 		}
@@ -66,6 +82,7 @@ public class SendMessage {
 			out.writeInt(bits.length + 1);
 			out.write(bitfield);
 			out.write(bits);
+			out.flush();
 		}catch(IOException e) {
 			System.out.println("Send bitfield IOException.");
 		}
@@ -75,6 +92,7 @@ public class SendMessage {
 		try {
 			out.write(request);
 			out.writeInt(pieceIndex);
+			out.flush();
 		}catch(IOException e) {
 			System.out.println("Send request IOException.");
 		}
@@ -86,6 +104,7 @@ public class SendMessage {
 			out.write(this.piece);
 			out.writeInt(pieceIndex);
 			out.write(piece);
+			out.flush();
 		}catch(IOException e) {
 			System.out.println("Send piece IOException.");
 		}

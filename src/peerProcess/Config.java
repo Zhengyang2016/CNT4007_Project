@@ -12,7 +12,7 @@ public class Config {
 	public int FileSize;
 	public int PieceSize;
 	public int peerIndex;
-	//use arraylist to store peerinfo, each element is a string array of length 4
+	//use arraylist to store peerinfo, each element is a string array of length 4: peerID,host name, port number, if having full file.
 	public ArrayList<String[]> peerInfo = new ArrayList<String[]>();
 	
 	public Config() {

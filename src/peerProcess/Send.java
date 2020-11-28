@@ -5,7 +5,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
-
+import peerProcess.SendMessage;
 /*
 *1. Get msg from console
 *2. Send msg

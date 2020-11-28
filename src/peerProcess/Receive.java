@@ -1,6 +1,7 @@
 package peerProcess;
 
-import java.io.DataInputStream;
+import java.io.InputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 
@@ -11,14 +12,23 @@ import java.net.Socket;
  */
 
 public class Receive implements Runnable{
-    private DataInputStream dis;
+	private String peerID;
+    private InputStream dis;
+    private DataOutputStream dos;
     private Socket peer;
+    private Message readMessage;
+    private SendMessage sendMessage;
     private boolean isRunning = true;
-
-    public Receive(Socket peer){
+    
+    
+    public Receive(Socket peer, String peerID){
         this.peer = peer;
         try {
-            dis = new DataInputStream(peer.getInputStream());
+            dis = peer.getInputStream();
+            dos = new DataOutputStream(peer.getOutputStream());
+            readMessage = new Message(dis);
+            sendMessage = new SendMessage(dos);
+            this.peerID = peerID;
         }catch (IOException e){
             System.out.println("====2====");
             this.release();
@@ -26,7 +36,7 @@ public class Receive implements Runnable{
     }
 
     //Receive
-    private String receive(){
+/*    private String receive(){
         String msg="";
         try {
             msg=dis.readUTF();
@@ -37,7 +47,7 @@ public class Receive implements Runnable{
         }
         return msg;
     }
-
+*/
     //Release
     private void release() {
         this.isRunning = false;
@@ -46,11 +56,22 @@ public class Receive implements Runnable{
 
     @Override
     public void run() {
+    	
+    	sendMessage.sendHandshake(peerID);
+    	String id = readMessage.readHandshake();
+    	System.out.println(peerID + " "+ id);
+    	
+    	// keep reading messages. 
+    	// start a new thread to send corresponding message based on the message read.
+    	// then update data rate etc. and check if need to send 'have' message.
         while (isRunning){
-            String msg = receive();
-            if (!msg.equals("")){
-                System.out.println(msg);
-            }
+        	try {
+        		readMessage.readNext();
+        	}catch(IOException e) {
+        		this.release();
+        	}
+        	
+        	
         }
     }
 }

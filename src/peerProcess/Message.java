@@ -20,8 +20,48 @@ public class Message {
 		this.in = in;
 	}
 	
+	//read handshake message
+	public String readHandshake() {
+		int read;//used to keep track of next byte read
+		byte[] bytes = new byte[18];
+		
+		try {
+			for(int i = 0;i<18;++i) {
+				read = in.read();
+				if(read != -1)//make sure read() does not return -1
+					bytes[i] = (byte)read;
+			}
+			String h = new String(bytes);
+			if(!h.equals("P2PFILESHARINGPROJ"))
+			{
+				System.out.println("Header not correct: " + h);
+				throw new IOException("Exception thrown");
+			}
+			if (in.skip(10) == 10)
+			{
+				bytes = new byte[4];
+				for(int i = 0;i<4;++i) {
+					read = in.read();
+					if(read != -1)//make sure read() does not return -1
+						bytes[i] = (byte)read;
+				}
+				String peerID = new String(bytes);
+				System.out.println("PeerID of handshake: " + peerID);
+				return peerID;
+			}
+			else
+			{
+				System.out.println("Failed to read 10 zero bytes.");
+				throw new IOException("Exception thrown");
+			}
+		}catch(IOException e) {
+			System.out.println("Get handshake message failed.");
+			return null;
+		}
+	}
+	
 	//read next message
-	public void readNext() {
+	public void readNext() throws IOException{
 		int read;//used to keep track of next byte read
 		byte[] bytes = new byte[4];
 		
@@ -36,13 +76,14 @@ public class Message {
 			System.out.print("Message length: " + length);
 		}catch(IOException e) {
 			System.out.println("Get message length failed.");
+			throw e;
 		}
 		
 		//get message type
 		try {
 			read = in.read();
 			if(read != -1)
-				type = in.read();
+				type = read;
 			System.out.print(" Type: " + type);
 		}catch(IOException e) {
 			System.out.println("Get message type failed.");

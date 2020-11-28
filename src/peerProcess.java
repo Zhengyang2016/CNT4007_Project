@@ -27,22 +27,22 @@ public class peerProcess {
 		//reading configuration file
 		Config cfg = new Config();//pass command line input to read config.
 		NumberOfPreferredNeighbors = cfg.NumberOfPreferredNeighbors;
-		System.out.println(NumberOfPreferredNeighbors);
+		System.out.println("NumberOfPreferredNeighbors: "+NumberOfPreferredNeighbors);
 		UnchokingInterval = cfg.UnchokingInterval;
-		System.out.println(UnchokingInterval);
+		System.out.println("UnchokingInterval: "+UnchokingInterval);
 		OptimisticUnchokingInterval = cfg.OptimisticUnchokingInterval;
-		System.out.println(OptimisticUnchokingInterval);
+		System.out.println("OptimisticUnchokingInterval: " + OptimisticUnchokingInterval);
 		FileName = cfg.FileName;
-		System.out.println(FileName);
+		System.out.println("FileName: " + FileName);
 		FileSize = cfg.FileSize;
-		System.out.println(FileSize);
+		System.out.println("FileSize: " + FileSize);
 		PieceSize = cfg.PieceSize;
-		System.out.println(PieceSize);
+		System.out.println("PieceSize: "+ PieceSize);
 		//read peers' information and store in peerInfo Arraylist
 		peerInfo = cfg.readPeerInfo(peerID);
-		System.out.println(peerInfo.get(2)[1]);
+		System.out.println(peerInfo.get(0)[1]);
 		peerIndex = cfg.getIndex();
-		System.out.println(peerIndex);
+		System.out.println("Index of this peer: " + peerIndex);
 		
 		//initialize the bitfield of this peer		
 		int bitfieldSize = FileSize/PieceSize;
@@ -54,7 +54,7 @@ public class peerProcess {
 			bitfieldSize = bitfieldSize/8;
 		byte[] bitfield = new byte[bitfieldSize];
 
-		
+		System.out.println("\nConnecting peers...");
 		//portNum = getConnection(peerID, portNum);
 		for (int peerNum = peerIndex; peerNum >= 1; peerNum--){
 			//Read host name and port number
@@ -65,26 +65,27 @@ public class peerProcess {
 			System.out.println(portNum);
 			Socket peer = new Socket(hostName,portNum);
 
-			new Thread(new Send(peer)).start();
-			new Thread(new Receive(peer)).start();
+			//new Thread(new Send(peer)).start();
+			new Thread(new Receive(peer, peerInfo.get(peerIndex)[0])).start();
 		}
 
 		portNum = Integer.parseInt(peerInfo.get(peerIndex)[2]);
-		System.out.println(portNum);
+		System.out.println("\nWaiting for connections on port " + portNum  + "..." );
 		ServerSocket serverSocket = new ServerSocket(portNum);
-
+		
 		while (true) {
 			Socket server = serverSocket.accept();
 			System.out.println("Get one connection");
 
-			new Thread(new Send(server)).start();
-			new Thread(new Receive(server)).start();
+			//new Thread(new Send(server)).start();
+			new Thread(new Receive(server,peerInfo.get(peerIndex)[0])).start();
+			peerIndex++;
 		}
 		
 	}
 
 	//Try to OOP, unused
-	private static int getConnection(String peerID, int portNum) throws IOException {
+	/*private static int getConnection(String peerID, int portNum) throws IOException {
 		for (int peerNum = Integer.parseInt(peerID); peerNum >= 2; peerNum--){
 			Socket peer = new Socket("localhost",portNum);
 
@@ -94,5 +95,5 @@ public class peerProcess {
 			portNum++;
 		}
 		return portNum;
-	}
+	}*/
 }	
