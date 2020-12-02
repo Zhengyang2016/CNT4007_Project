@@ -1,7 +1,4 @@
-import peerProcess.Config;
-import peerProcess.Utils;
-import peerProcess.Send;
-import peerProcess.Receive;
+import peerProcess.*;
 
 import java.util.ArrayList;
 import java.io.IOException;
@@ -10,7 +7,8 @@ import java.net.Socket;
 
 public class peerProcess {
 	public static void main(String[] args) throws IOException {
-
+		
+		Stats stats;
 		int portNum;
 		String hostName;
 		int NumberOfPreferredNeighbors;
@@ -23,6 +21,7 @@ public class peerProcess {
 		int peerIndex;//the position of this peer in the configuration file
 
 		ArrayList<String[]> peerInfo = new ArrayList<String[]>();
+		ArrayList<Stats> connectedPeers = new ArrayList<Stats>();
 
 		//reading configuration file
 		Config cfg = new Config();//pass command line input to read config.
@@ -64,22 +63,28 @@ public class peerProcess {
 			portNum = Integer.parseInt(peerInfo.get(peerNum-1)[2]);
 			System.out.println(portNum);
 			Socket peer = new Socket(hostName,portNum);
-
+			
+			stats = new Stats(peerInfo.get(peerNum-1)[0]);
+			connectedPeers.add(stats);
+			
 			//new Thread(new Send(peer)).start();
-			new Thread(new Receive(peer, peerInfo.get(peerIndex)[0])).start();
+			new Thread( new Receive(peer, peerInfo.get(peerIndex)[0], stats,connectedPeers) ).start();
 		}
 
 		portNum = Integer.parseInt(peerInfo.get(peerIndex)[2]);
 		System.out.println("\nWaiting for connections on port " + portNum  + "..." );
 		ServerSocket serverSocket = new ServerSocket(portNum);
-		
+		int i = 1;
 		while (true) {
 			Socket server = serverSocket.accept();
 			System.out.println("Get one connection");
-
+			
+			stats = new Stats(peerInfo.get(peerIndex+i)[0]);
+			connectedPeers.add(stats);
+			
 			//new Thread(new Send(server)).start();
-			new Thread(new Receive(server,peerInfo.get(peerIndex)[0])).start();
-			peerIndex++;
+			new Thread( new Receive(server, peerInfo.get(peerIndex)[0], stats,connectedPeers) ).start();
+			i++;
 		}
 		
 	}
