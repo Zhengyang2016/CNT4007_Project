@@ -33,6 +33,7 @@ public class Send implements Runnable{
 	{
 		this.dos = dos;
 		this.messageType = 7;
+		this.pieceIndex = pieceIndex;
 		this.piece = piece;
 	}
 	

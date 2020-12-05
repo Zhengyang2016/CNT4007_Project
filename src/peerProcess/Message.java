@@ -84,7 +84,7 @@ public class Message {
 			read = in.read();
 			if(read != -1)
 				type = read;
-			System.out.print(" Type: " + type);
+			System.out.println(" Type: " + type);
 		}catch(IOException e) {
 			System.out.println("Get message type failed.");
 		}

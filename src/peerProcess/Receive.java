@@ -20,7 +20,6 @@ public class Receive implements Runnable{
     private DataOutputStream dos;
     private Socket peer;
     private Message readMessage;
-//    private SendMessage sendMessage;
     private boolean isRunning = true;
     
     
@@ -34,7 +33,6 @@ public class Receive implements Runnable{
             dos = new DataOutputStream(peer.getOutputStream());
             connectedPeer.setDOS(dos);
             readMessage = new Message(dis);
-//            sendMessage = new SendMessage(dos);
             
         }catch (IOException e){
             System.out.println("====2====");
@@ -42,19 +40,6 @@ public class Receive implements Runnable{
         }
     }
 
-    //Receive
-/*    private String receive(){
-        String msg="";
-        try {
-            msg=dis.readUTF();
-            //System.out.println(msg);
-        }catch (IOException e){
-            System.out.println("====4====");
-            release();
-        }
-        return msg;
-    }
-*/
     //Release
     private void release() {
         this.isRunning = false;
@@ -63,33 +48,20 @@ public class Receive implements Runnable{
 
     @Override
     public void run() {
-    	
-    	SendMessage.sendHandshake(dos,peerID);
+    	synchronized(dos)
+    	{
+    		SendMessage.sendHandshake(dos,peerID);
+    		//also need to send bitfield here
+    	}
     	String id = readMessage.readHandshake();
 
     	if(id.equals(connectedPeer.peerID))
     	{
-        	System.out.println(peerID + " "+ id);
+        	System.out.println("Peer's ID correct: " + id);
     	}
-    	
-    	new Thread(new Runnable() {
-    		private DataOutputStream dos;
-    		public Runnable init(DataOutputStream dos) {
-    			this.dos = dos;
-    			return this;
-    		}
-    		
-    	    public void run() {
-    	    	synchronized(dos)
-    	    	{
-    	    		SendMessage.sendChoke(dos);
-    	    	}
-    	    }
-    	}.init(dos)).start();
-    	
-    	try {
-    		readMessage.readNext();
-    	}catch(IOException e) {
+    	else
+    	{
+    		System.out.println("Peer's ID incorrect: " + id);
     		this.release();
     	}
     	
@@ -103,7 +75,24 @@ public class Receive implements Runnable{
         		this.release();
         	}
         	
+        	switch (readMessage.type)
+        	{
+        	case 0:
+        		
+        	case 1:
         	
+        	case 2:
+        	
+        	case 3:
+        	
+        	case 4:
+        	
+        	case 5:
+        		
+        	case 6:
+        		
+        	case 7:
+        	}
         }
     }
 }
