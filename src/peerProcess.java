@@ -18,6 +18,7 @@ public class peerProcess {
 		int FileSize;
 		int PieceSize;
 		String peerID = args[0];
+		int k = Integer.parseInt(args[1]);
 		int peerIndex;//the position of this peer in the configuration file
 
 		ArrayList<String[]> peerInfo = new ArrayList<String[]>();
@@ -65,7 +66,6 @@ public class peerProcess {
 			Socket peer = new Socket(hostName,portNum);
 			
 			stats = new Stats(peerInfo.get(peerNum-1)[0]);
-			connectedPeers.add(stats);
 			
 			//new Thread(new Send(peer)).start();
 			new Thread( new Receive(peer, peerInfo.get(peerIndex)[0], stats,connectedPeers) ).start();

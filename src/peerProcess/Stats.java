@@ -7,9 +7,10 @@ public class Stats {
 	
 	public String peerID;
 	
-	public boolean interested = false;
-	public boolean choke = false;
-	public float speed = -1;
+	public volatile boolean interested = false;
+	public volatile boolean choke = false;
+	public volatile boolean optimisticUnchoke = false;
+	public volatile float speed = -1;
 	public DataOutputStream out;
 	
 	public Stats(String ID){
