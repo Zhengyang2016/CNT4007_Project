@@ -1,69 +1,107 @@
 package peerProcess;
 
-import java.io.BufferedReader;
 import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.Socket;
-import peerProcess.SendMessage;
-/*
-*1. Get msg from console
-*2. Send msg
-*3. Release resource
-*4. Override run
- */
 
 public class Send implements Runnable{
-    private BufferedReader console;
-    private DataOutputStream dos;
-    private Socket peer;
-    private boolean isRunning = true;
-
-    public Send(Socket peer){
-        this.peer = peer;
-        console = new BufferedReader(new InputStreamReader(System.in));
-        try {
-            dos = new DataOutputStream(peer.getOutputStream());
-        }catch (IOException e){
-            System.out.println("====1====");
-            this.release();
-        }
-    }
-
-    //Get input from console
-    private String getFromConsole(){
-        try {
-            return console.readLine();
-        }catch (IOException e){
-            e.printStackTrace();
-        }
-        return "";
-    }
-
-    //Send
-    private void send(String msg){
-        try {
-            dos.writeUTF(msg);
-            dos.flush();
-        }catch (IOException e){
-            System.out.println("====3====");
-            this.release();
-        }
-    }
-
-    //Release
-    private void release() {
-        this.isRunning = false;
-        Utils.close(dos,peer);
-    }
-
+	private DataOutputStream dos;
+	private int pieceIndex;
+	private byte[] bitfield;
+	private byte[] piece;
+	private int messageType; //
+	
+	public Send(DataOutputStream dos, int type)
+	{
+		this.dos = dos;
+		this.messageType = type;
+	}
+	
+	public Send(DataOutputStream dos, int type, int pieceIndex)
+	{
+		this.dos = dos;
+		this.messageType = type;
+		this.pieceIndex = pieceIndex;
+	}
+	
+	public Send(DataOutputStream dos, byte[] bitfield)
+	{
+		this.dos = dos;
+		this.messageType = 5;
+		this.bitfield = bitfield;
+	}
+	
+	public Send(DataOutputStream dos,int pieceIndex, byte[] piece)
+	{
+		this.dos = dos;
+		this.messageType = 7;
+		this.piece = piece;
+	}
+	
     @Override
     public void run() {
-        while (isRunning){
-            String msg = getFromConsole();
-            if (!msg.equals("")){
-                send(msg);
-            }
+        switch (messageType)
+        {
+        case 0:
+        	synchronized(dos)
+        	{
+        		SendMessage.sendChoke(dos);
+        	}
+        	break;
+        
+        case 1:
+        
+        	synchronized(dos)
+        	{
+        		SendMessage.sendUnchoke(dos);
+        	}
+        	break;
+        
+        case 2:
+        
+        	synchronized(dos)
+        	{
+        		SendMessage.sendInterested(dos);
+        	}
+        	break;
+        
+        case 3:
+        
+        	synchronized(dos)
+        	{
+        		SendMessage.sendNotInterested(dos);
+        	}
+        	break;
+        
+        case 4:
+        
+        	synchronized(dos)
+        	{
+        		SendMessage.sendHave(dos,pieceIndex);
+        	}
+        	break;
+        
+        case 5:
+        
+        	synchronized(dos)
+        	{
+        		SendMessage.sendBitfield(dos,bitfield);
+        	}
+        	break;
+        
+        case 6:
+        
+        	synchronized(dos)
+        	{
+        		SendMessage.sendRequest(dos,pieceIndex);
+        	}
+        	break;
+        
+        case 7:
+        
+        	synchronized(dos)
+        	{
+        		SendMessage.sendPiece(dos,pieceIndex,piece);
+        	}
+        	break;
         }
     }
 

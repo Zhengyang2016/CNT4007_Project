@@ -20,7 +20,7 @@ public class Receive implements Runnable{
     private DataOutputStream dos;
     private Socket peer;
     private Message readMessage;
-    private SendMessage sendMessage;
+//    private SendMessage sendMessage;
     private boolean isRunning = true;
     
     
@@ -34,7 +34,7 @@ public class Receive implements Runnable{
             dos = new DataOutputStream(peer.getOutputStream());
             connectedPeer.setDOS(dos);
             readMessage = new Message(dis);
-            sendMessage = new SendMessage(dos);
+//            sendMessage = new SendMessage(dos);
             
         }catch (IOException e){
             System.out.println("====2====");
@@ -64,7 +64,7 @@ public class Receive implements Runnable{
     @Override
     public void run() {
     	
-    	sendMessage.sendHandshake(dos,peerID);
+    	SendMessage.sendHandshake(dos,peerID);
     	String id = readMessage.readHandshake();
 
     	if(id.equals(connectedPeer.peerID))
@@ -82,11 +82,16 @@ public class Receive implements Runnable{
     	    public void run() {
     	    	synchronized(dos)
     	    	{
-    	    		sendMessage.sendChoke(dos);
+    	    		SendMessage.sendChoke(dos);
     	    	}
     	    }
     	}.init(dos)).start();
     	
+    	try {
+    		readMessage.readNext();
+    	}catch(IOException e) {
+    		this.release();
+    	}
     	
     	// keep reading messages. 
     	// start a new thread to send corresponding message based on the message read.
