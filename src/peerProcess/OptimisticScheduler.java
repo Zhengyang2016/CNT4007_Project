@@ -9,13 +9,14 @@ public class OptimisticScheduler extends TimerTask{
 	public ArrayList<Stats> connectedPeers;
 	public Stats currentOptimisticPeer;
 	
-	public OptimisticScheduler(int k, ArrayList<Stats> connectedPeers)
+	public OptimisticScheduler(ArrayList<Stats> connectedPeers)
 	{
 		this.connectedPeers = connectedPeers;
 	}
 	
 	public void run() 
 	{
+		System.out.println("-Changing optimistically unchoked neighbor...");
 		ArrayList<Stats> interestedPeers = new ArrayList<Stats>();
 		for(int i = 0;i < connectedPeers.size(); ++i)
 		{
@@ -36,6 +37,7 @@ public class OptimisticScheduler extends TimerTask{
 			new Thread( new Send(currentOptimisticPeer.out,1) ).start();
 			currentOptimisticPeer.choke = false;
 			currentOptimisticPeer.optimisticUnchoke = true;
+			System.out.println("-Current optimistically unchoked neighbor: " + currentOptimisticPeer.peerID);
 		}
 		
 		

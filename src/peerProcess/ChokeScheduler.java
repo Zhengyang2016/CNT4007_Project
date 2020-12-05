@@ -15,6 +15,7 @@ public class ChokeScheduler extends TimerTask{
 	
 	public void run() 
 	{
+		System.out.println("-Changing preferred neighbors...");
 		ArrayList<Stats> interestedPeers = new ArrayList<Stats>();
 		ArrayList<Stats> chokePeers;
 		synchronized(connectedPeers) 
@@ -40,6 +41,7 @@ public class ChokeScheduler extends TimerTask{
 					interestedPeers.get(i).choke = false;
 				}
 				chokePeers.remove(interestedPeers.get(i));
+				System.out.println("-Preferred neighbors: " + interestedPeers.get(i).peerID);
 			}
 			
 		}
@@ -61,6 +63,7 @@ public class ChokeScheduler extends TimerTask{
 					interestedPeers.get(i).choke = false;
 				}
 				chokePeers.remove(interestedPeers.get(i));
+				System.out.println("-Preferred neighbors: " + interestedPeers.get(i).peerID);
 			}
 			
 		}

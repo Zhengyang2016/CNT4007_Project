@@ -1,6 +1,6 @@
 import peerProcess.*;
 
-import java.util.ArrayList;
+import java.util.*;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -23,6 +23,9 @@ public class peerProcess {
 
 		ArrayList<String[]> peerInfo = new ArrayList<String[]>();
 		ArrayList<Stats> connectedPeers = new ArrayList<Stats>();
+		
+		Timer chokeTimer = new Timer();
+		Timer optimisticTimer = new Timer();
 
 		//reading configuration file
 		Config cfg = new Config();//pass command line input to read config.
@@ -53,8 +56,12 @@ public class peerProcess {
 		else
 			bitfieldSize = bitfieldSize/8;
 		byte[] bitfield = new byte[bitfieldSize];
-
+		
 		System.out.println("\nConnecting peers...");
+		
+		chokeTimer.schedule( new ChokeScheduler(k,connectedPeers) ,0,UnchokingInterval * 1000);
+		optimisticTimer.schedule( new OptimisticScheduler(connectedPeers), 0, OptimisticUnchokingInterval * 1000 );
+		
 		//portNum = getConnection(peerID, portNum);
 		for (int peerNum = peerIndex; peerNum >= 1; peerNum--){
 			//Read host name and port number
