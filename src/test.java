@@ -12,7 +12,7 @@ public class test {
 			return this;
 		}
 		
-	   // @Override
+		@Override
 	    public void run() {
 	    	synchronized(myString){
 	    	System.out.println("enter thread: " + myString);

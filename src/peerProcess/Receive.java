@@ -64,13 +64,28 @@ public class Receive implements Runnable{
     @Override
     public void run() {
     	
-    	sendMessage.sendHandshake(peerID);
+    	sendMessage.sendHandshake(dos,peerID);
     	String id = readMessage.readHandshake();
 
     	if(id.equals(connectedPeer.peerID))
     	{
         	System.out.println(peerID + " "+ id);
     	}
+    	
+    	new Thread(new Runnable() {
+    		private DataOutputStream dos;
+    		public Runnable init(DataOutputStream dos) {
+    			this.dos = dos;
+    			return this;
+    		}
+    		
+    	    public void run() {
+    	    	synchronized(dos)
+    	    	{
+    	    		sendMessage.sendChoke(dos);
+    	    	}
+    	    }
+    	}.init(dos)).start();
     	
     	
     	// keep reading messages. 

@@ -6,15 +6,15 @@ import java.io.IOException;
 public class SendMessage {
 	
 	public DataOutputStream out;
-	public byte[] choke = {0,0,0,1,0};
-	public byte[] unchoke = {0,0,0,1,1};
-	public byte[] interested = {0,0,0,1,2};
-	public byte[] notInterested = {0,0,0,1,3};
-	public byte[] have = {0,0,0,5,4};
-	public byte[] bitfield = {5};
-	public byte[] request = {0,0,0,5,6};
-	public byte[] piece = {7};
-	String handshake = "P2PFILESHARINGPROJ          ";
+	static public byte[] choke = {0,0,0,1,0};
+	static public byte[] unchoke = {0,0,0,1,1};
+	static public byte[] interested = {0,0,0,1,2};
+	static public byte[] notInterested = {0,0,0,1,3};
+	static public byte[] have = {0,0,0,5,4};
+	static public byte[] bitfield = {5};
+	static public byte[] request = {0,0,0,5,6};
+	static public byte[] pieceType = {7};
+	static String handshake = "P2PFILESHARINGPROJ          ";
 	
 	
 	//create object using socket output stream
@@ -22,89 +22,89 @@ public class SendMessage {
 		this.out = out;
 	}
 	
-	public void sendHandshake(String peerID) {
+	static public void sendHandshake(DataOutputStream dos, String peerID) {
 		try {
-			out.writeBytes(handshake);
-			out.writeBytes(peerID);
-			out.flush();
+			dos.writeBytes(handshake);
+			dos.writeBytes(peerID);
+			dos.flush();
 		}catch(IOException e) {
 			System.out.println("Send handshake IOException.");
 		}
 	}
 	
-	public void sendChoke() {
+	static public void sendChoke(DataOutputStream dos) {
 		try {
-			out.write(choke);
-			out.flush();
+			dos.write(choke);
+			dos.flush();
 		}catch(IOException e) {
 			System.out.println("Send choke IOException.");
 		}
 	}
 	
-	public void sendUnchoke() {
+	static public void sendUnchoke(DataOutputStream dos) {
 		try {
-			out.write(unchoke);
-			out.flush();
+			dos.write(unchoke);
+			dos.flush();
 		}catch(IOException e) {
 			System.out.println("Send unchoke IOException.");
 		}
 	}
 	
-	public void sendInterested() {
+	static public void sendInterested(DataOutputStream dos) {
 		try {
-			out.write(interested);
-			out.flush();
+			dos.write(interested);
+			dos.flush();
 		}catch(IOException e) {
 			System.out.println("Send interested IOException.");
 		}
 	}
 	
-	public void sendNotInterested() {
+	static public void sendNotInterested(DataOutputStream dos) {
 		try {
-			out.write(notInterested);
+			dos.write(notInterested);
 		}catch(IOException e) {
 			System.out.println("Send notInterested IOException.");
 		}
 	}
 	
-	public void sendHave(int pieceIndex) {
+	static public void sendHave(DataOutputStream dos, int pieceIndex) {
 		try {
-			out.write(have);
-			out.writeInt(pieceIndex);
-			out.flush();
+			dos.write(have);
+			dos.writeInt(pieceIndex);
+			dos.flush();
 		}catch(IOException e) {
 			System.out.println("Send have IOException.");
 		}
 	}
 	
-	public void sendBitfield(byte[] bits) {
+	static public void sendBitfield(DataOutputStream dos, byte[] bits) {
 		try {
-			out.writeInt(bits.length + 1);
-			out.write(bitfield);
-			out.write(bits);
-			out.flush();
+			dos.writeInt(bits.length + 1);
+			dos.write(bitfield);
+			dos.write(bits);
+			dos.flush();
 		}catch(IOException e) {
 			System.out.println("Send bitfield IOException.");
 		}
 	}
 	
-	public void sendRequest(int pieceIndex) {
+	static public void sendRequest(DataOutputStream dos, int pieceIndex) {
 		try {
-			out.write(request);
-			out.writeInt(pieceIndex);
-			out.flush();
+			dos.write(request);
+			dos.writeInt(pieceIndex);
+			dos.flush();
 		}catch(IOException e) {
 			System.out.println("Send request IOException.");
 		}
 	}
 	
-	public void sendPiece(int pieceIndex, byte[] piece) {
+	static public void sendPiece(DataOutputStream dos, int pieceIndex, byte[] piece) {
 		try {
-			out.writeInt(piece.length+5);
-			out.write(this.piece);
-			out.writeInt(pieceIndex);
-			out.write(piece);
-			out.flush();
+			dos.writeInt(piece.length+5);
+			dos.write(pieceType);
+			dos.writeInt(pieceIndex);
+			dos.write(piece);
+			dos.flush();
 		}catch(IOException e) {
 			System.out.println("Send piece IOException.");
 		}
