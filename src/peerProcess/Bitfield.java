@@ -55,13 +55,34 @@ public class Bitfield {
 	
 	//set a bit in the bitfield.
 	
+	/*
 	synchronized void setBit(int[] a, int index) {
-		
+	
+	
 		if(a[index] == 0)
 			a[index] = 1;
 		bitfield[index] = a[index];
 	}
-	/*
+	*/
+
+	
+	synchronized void turnBitOff(byte[] bytes, int index) {
+	
+		for(int i = 0; i<pieceNumber; i++) {
+			if((bytes[i/8] & (1 << (i%8)) )== 0){
+				bitfield[i] = 0;
+			}
+			else {
+				bitfield[i] = 1;
+			}
+			}
+
+		if(bitfield[index] == 1)
+			bitfield[index] = 0;
+		
+	}
+	
+	
 	synchronized void setBit(byte[] bytes, int index) {
 		
 		bytes[index/8] |= (128 >>> (index % 8));
@@ -75,7 +96,7 @@ public class Bitfield {
 		}
 		}
 	}
-	*/
+	
 	
 	/*
 	 * calculate pieceNumber
@@ -92,7 +113,7 @@ public class Bitfield {
 	 * check if all pieces are donwloaded
 	 * 
 	 */
-	public boolean isDonwloadFinished() {
+	synchronized boolean isDonwloadFinished() {
 		
 		boolean DownloadFinished = true;
 		for(int i =0; i < pieceNumber; i++) {
