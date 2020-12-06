@@ -54,7 +54,10 @@ public class peerProcess {
 		peerIndex = cfg.getIndex();
 		System.out.println("Index of this peer: " + peerIndex);
 		
-		//initialize the number of blocks needed
+		//Initialize the storage path of the src file & split file
+		srcPath = "src/peer_"+peerID+"/";
+		destDir = "src/peer_"+peerID+"/";
+		//initialize the number of pieces needed
 		pieceNum = (int)Math.ceil(FileSize/PieceSize);
 		//Initialize the storage path of the split file
 		destPaths = new ArrayList<String>();
