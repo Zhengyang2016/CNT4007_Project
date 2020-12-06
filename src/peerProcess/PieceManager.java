@@ -49,6 +49,38 @@ public class PieceManager {
 
         return piece;
     }
+    
+    /**
+     * write a piece into a byte[] and ready to send
+     * @param destPaths a list of each piece's address
+     * @param pieceSize each piece's size
+     * @param pieceNum total piece count
+     * @param fileSize full file size
+     * @param pieceIndex pieceIndex
+     * @return byte[] for transmission
+     */
+    public static byte[] toSend(List<String> destPaths, int pieceSize, int pieceNum, int fileSize, int pieceIndex){
+        int actualSize;
+        int lastPieceSize = fileSize - (pieceNum-1)*pieceSize;
+        byte[] piece = null;
+
+        if (pieceIndex == pieceNum-1){//The last piece
+            actualSize = lastPieceSize;
+        }else {
+            actualSize = pieceSize;
+        }
+
+        try {
+            InputStream is = new BufferedInputStream(new FileInputStream(destPaths.get(pieceIndex)));
+            piece = new byte[actualSize];
+            is.read(piece);
+            Utils.close(is);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return piece;
+    }
 
     /**
      * Write the byte[] received to a local file
