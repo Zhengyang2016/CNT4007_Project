@@ -55,7 +55,6 @@ public class Receive implements Runnable{
     	synchronized(dos)
     	{
     		SendMessage.sendHandshake(dos,peerID);
-    		//also need to send bitfield here
     	}
     	String id = readMessage.readHandshake();
 
@@ -69,9 +68,12 @@ public class Receive implements Runnable{
     		this.release();
     	}
     	
-    	// keep reading messages. 
-    	// start a new thread to send corresponding message based on the message read.
-    	// then update data rate etc. and check if need to send 'have' message.
+//	!!!	synchronized send bitfield here
+    	
+    	
+    	/* keep reading messages. 
+    	start a new thread to send corresponding message based on the message read.
+    	then update data rate etc. and check if need to send 'have' message. */
         while (isRunning){
         	try {
         		readMessage.readNext();
@@ -81,28 +83,39 @@ public class Receive implements Runnable{
         	
         	switch (readMessage.type)
         	{
-        	case 0:
+        	case 0://choke: set chokeMe to true. see if last request piece is received, if not, set that
+        			//piece to 0 in the bitfield
+        		
         		break;
         		
-        	case 1:
+        	case 1://unchoke: send request message or not interested if peer has no interesting piece
+        			// upon receiving this unchoke; set chokeMe to false
+        		
         		break;
         	
-        	case 2:
+        	case 2://interested: set interested to true in stats	-complete
+        		connectedPeer.interested = true;
         		break;
         	
-        	case 3:
+        	case 3://not interested: set interested to false in stats	-complete
+        		connectedPeer.interested = false;
         		break;
         	
-        	case 4:
+        	case 4://have: update bitfield and send interested/!interested
+        		
         		break;
         	
-        	case 5:
+        	case 5://bitfield: store others' bitfield and compare with own bitfield to send interested/not interested
+        		
         		break;
         		
-        	case 6:
+        	case 6://request: check if peer is choked, if not, send the piece
+        		
         		break;
         		
-        	case 7:
+        	case 7://piece: update own bitfield, send have to all other peers and decide whether to send 
+        			//not interested to other peers, then send next request to peer if peer does not choke me
+        		
         		break;
         	}
         }

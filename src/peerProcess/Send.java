@@ -7,28 +7,29 @@ public class Send implements Runnable{
 	private int pieceIndex;
 	private byte[] bitfield;
 	private byte[] piece;
-	private int messageType; //
+	private int messageType;
 	
+	//used for type 0,1,2,3
 	public Send(DataOutputStream dos, int type)
 	{
 		this.dos = dos;
 		this.messageType = type;
 	}
-	
+	//used for have(4) and request(6).
 	public Send(DataOutputStream dos, int type, int pieceIndex)
 	{
 		this.dos = dos;
 		this.messageType = type;
 		this.pieceIndex = pieceIndex;
 	}
-	
+	//used for bitfield
 	public Send(DataOutputStream dos, byte[] bitfield)
 	{
 		this.dos = dos;
 		this.messageType = 5;
 		this.bitfield = bitfield;
 	}
-	
+	//used for piece
 	public Send(DataOutputStream dos,int pieceIndex, byte[] piece)
 	{
 		this.dos = dos;
