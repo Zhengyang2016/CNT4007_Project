@@ -26,6 +26,13 @@ public class peerProcess {
 		
 		Timer chokeTimer = new Timer();
 		Timer optimisticTimer = new Timer();
+		
+		//parameters for file transfer
+		String srcPath;
+		String destDir;
+		List<String> destPaths;
+		int pieceNum;
+		int pieceIndex;
 
 		//reading configuration file
 		Config cfg = new Config();//pass command line input to read config.
@@ -46,6 +53,15 @@ public class peerProcess {
 		System.out.println(peerInfo.get(0)[1]);
 		peerIndex = cfg.getIndex();
 		System.out.println("Index of this peer: " + peerIndex);
+		
+		//initialize the number of blocks needed
+		pieceNum = (int)Math.ceil(FileSize/PieceSize);
+		//Initialize the storage path of the split file
+		destPaths = new ArrayList<String>();
+		destDir = "peer_"+peerID;
+		for (int i=0;i<pieceNum;i++){
+			destPaths.add(destDir+i+"-"+FileName);
+		}
 		
 		//initialize the bitfield of this peer		
 		int bitfieldSize = FileSize/PieceSize;
