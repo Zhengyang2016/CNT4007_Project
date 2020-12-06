@@ -61,7 +61,6 @@ public class peerProcess {
 		pieceNum = (int)Math.ceil(FileSize/PieceSize);
 		//Initialize the storage path of the split file
 		destPaths = new ArrayList<String>();
-		destDir = "peer_"+peerID;
 		for (int i=0;i<pieceNum;i++){
 			destPaths.add(destDir+i+"-"+FileName);
 		}
