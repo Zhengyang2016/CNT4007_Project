@@ -13,6 +13,7 @@ public class Stats {
 	public volatile boolean chokeMe = true;
 	public volatile float speed = -1;
 	public DataOutputStream out;
+	public volatile int requesting = -1;
 	
 	public Stats(String ID){
 		this.peerID = ID;
