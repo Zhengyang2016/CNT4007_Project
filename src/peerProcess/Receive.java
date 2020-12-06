@@ -32,10 +32,6 @@ public class Receive implements Runnable{
             dis = peer.getInputStream();
             dos = new DataOutputStream(peer.getOutputStream());
             connectedPeer.setDOS(dos);
-            synchronized(allConnectedPeers)
-			{
-				allConnectedPeers.add(connectedPeer);
-			}
             readMessage = new Message(dis);
             
         }catch (IOException e){
@@ -55,7 +51,13 @@ public class Receive implements Runnable{
     	synchronized(dos)
     	{
     		SendMessage.sendHandshake(dos,peerID);
+//    !!!	synchronized send bitfield here
     	}
+    	synchronized(allConnectedPeers)
+		{
+			allConnectedPeers.add(connectedPeer);
+		}
+    	
     	String id = readMessage.readHandshake();
 
     	if(id.equals(connectedPeer.peerID))
@@ -68,7 +70,6 @@ public class Receive implements Runnable{
     		this.release();
     	}
     	
-//	!!!	synchronized send bitfield here
     	
     	
     	/* keep reading messages. 
