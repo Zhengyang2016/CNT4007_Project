@@ -40,7 +40,60 @@ public class BitFieldHandler {
      * @return Randomly selected index of piece to be requested
      * If there is nothing to request, return -1
      */
-    public static int selectPiece(int[] others,int[] self){
+    public static synchronized int selectPiece(byte[] peer,byte[] self){
+    	byte[] request = new byte[self.length];
+    	int n = 0;
+    	Random rand = new Random();
+    	
+    	for(int i = 0;i < self.length;++i)
+    	{
+    		request[i] = (byte)(( self[i] | peer[i] ) ^ self[i] );
+    		if (request[i] != 0)
+    			n += 1;
+    	}
+    	if(n == 0)
+    		return -1;
+    	int selectByte = rand.nextInt(n);
+    	
+    	for(int i = 0;i < request.length;++i)
+    	{
+    		if(request[i] != 0)
+    			n -= 1;
+    		if (n == selectByte)
+    		{	
+    			int count = 0;
+    			for(int j = 0;j<8;++j)
+    			{
+    				if ( ((request[i] >>> j) & 1 )== 1 )
+    					count++;
+    				//System.out.println(request[0]>>>j);
+    			}
+    			//System.out.println(count);
+    			//System.out.println(request[0]);
+    			
+    			int selectPiece = rand.nextInt(count);
+    			for(int j = 0;j<8;++j)
+    			{
+    				if ( ((request[i] << j) & 128 )== 128 )
+    				{
+    					count -= 1;
+    				}
+    				if ( count == selectPiece )
+    				{
+    					//System.out.println(i+" "+j);
+    					setBit(self, (i*8 +j));
+    					return (i*8 + j);
+    				}
+    			}
+    		}
+    		
+    	}
+    	
+    	return -1;
+    	
+/*    	int[] others = toIntArray(peer);
+    	int[] self = toIntArray(myself);
+    	
         int[] a = new int[others.length];
         int counter = 0;
         int selectedPieceIndex = 0;
@@ -83,15 +136,57 @@ public class BitFieldHandler {
         System.out.println("Selected PieceIndex is: " + selectedPieceIndex);
 
         return selectedPieceIndex;
+*/
     }
-
+    
+    public static void setBit(byte[] bytes, int index) {
+		bytes[index/8] |= (128 >>> (index % 8));
+	}
+    
+    public static synchronized void resetBit(byte[] bytes, int index) {
+		bytes[index/8] &= (~(128 >>> (index % 8)));
+	}
+    
+    public static synchronized boolean interested(byte[] peer, byte[] self) {
+    	boolean interested = false;
+    	
+    	for(int i = 0; i < self.length; ++i)
+    	{
+    		if(peer[i] == self[i])
+    			continue;
+    		else
+    		{
+    			int diff = peer[i] ^ self[i];
+    			if( (diff | self[i]) != self[i] )
+    			{
+    				interested = true;
+    				break;
+    			}
+    		}
+    	}
+    	
+    	return interested;
+    }
+    
+    public static synchronized boolean downloadFinished(byte[] self, byte sparebits) {
+    	
+    	for(int i = 0;i<self.length-1;++i)
+    	{
+    		if(self[i] != -1)
+    			return false;
+    	}
+    	if( self[self.length-1] != sparebits )
+    		return false;
+    	return true;
+    }
+    
     /**
      * Checks if the selected piece has been requested
      * @param selectedPiece selected piece index
      * @param connectedPeers ArrayList that contain all connected peers
      * @return ture for not requested yet; false for already requested
      */
-    public static boolean alreadyRequested(int selectedPiece, ArrayList<Stats> connectedPeers){
+/*    public static boolean alreadyRequested(int selectedPiece, ArrayList<Stats> connectedPeers){
         for (int i=0; i<connectedPeers.size(); i++){
             if (selectedPiece == connectedPeers.get(i).requesting){
                 return false;
@@ -99,9 +194,9 @@ public class BitFieldHandler {
         }
         return true;
     }
-
+*/
     public static void test(){
-        byte[] test = new byte[8];
+ /*       byte[] test = new byte[8];
         for (int i=0;i<8;i++){
             test[i] = (byte)(i*13);
         }
@@ -122,10 +217,16 @@ public class BitFieldHandler {
             }
             System.out.print("\n");
         }
+*/
+        byte[] a = {0,-1,-1,0};//,0,1,1,1,1,0,1,0,0,1,1,1,1,1,1,0,0,1,1,1,1,0,1,0,0,1,1,1};
+        byte[] b = {-1,-1,-1,-2};//,0,0,1,1,1,0,0,0,0,1,1,1,1,0,0,1,0,1,1,1,0,0,0,0,0,1,1,1};
 
-        int[] a = {0,0,0,0,0,1,1,1,1,0,1,0,0,1,1,1,1,1,1,0,0,1,1,1,1,0,1,0,0,1,1,1};
-        int[] b = {0,1,0,0,0,0,1,1,1,0,0,0,0,1,1,1,1,0,0,1,0,1,1,1,0,0,0,0,0,1,1,1};
-
-        selectPiece(a,b);
+        System.out.println(selectPiece(b,a));
+        setBit(a,0);
+        System.out.println("set: "+a[0] + " "+ a[1]+" "+a[2]+" "+a[3]);
+        resetBit(a,0);
+        System.out.println("reset: "+a[0] + " "+ a[1]+" "+a[2]+" "+a[3]);
+        System.out.println("Intereested: "+ interested(b,a) );
+        System.out.println("Downloaded: "+ downloadFinished(b,(byte)-4) );
     }
 }

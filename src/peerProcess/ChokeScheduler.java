@@ -6,11 +6,13 @@ public class ChokeScheduler extends TimerTask{
 	
 	public ArrayList<Stats> connectedPeers;
 	public int k;
+	public MyStats myStats;
 	
-	public ChokeScheduler(int k, ArrayList<Stats> connectedPeers)
+	public ChokeScheduler(int k, ArrayList<Stats> connectedPeers, MyStats myStats)
 	{
 		this.k = k;
 		this.connectedPeers = connectedPeers;
+		this.myStats = myStats;
 	}
 	
 	public void run() 
@@ -45,7 +47,21 @@ public class ChokeScheduler extends TimerTask{
 			}
 			
 		}
-//!!!!!!need an eles if(have complete file) here to randomly choose preferred neighbors
+		// randomly choose preferred neighbors when having complete file
+		else if (myStats.downloadFinished)
+		{
+			Collections.shuffle(interestedPeers);
+			for(int i = 0; i < k; ++i)
+			{	
+				if(interestedPeers.get(i).choke)
+				{
+					new Thread( new Send(interestedPeers.get(i).out,1) ).start();
+					interestedPeers.get(i).choke = false;
+				}
+				chokePeers.remove(interestedPeers.get(i));
+				System.out.println("-Preferred neighbors: " + interestedPeers.get(i).peerID);
+			}
+		}
 		//else sort interested neighbors by speed in descending order, unchoke first k neighbors
 		else
 		{

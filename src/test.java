@@ -1,43 +1,27 @@
 import java.io.IOException;
-
+import java.util.*;
+import peerProcess.*;
 public class test {
 	public static void main(String[] args) {
 		
-	String s = "test";
+		int spareBits = 3;
+		int bitfieldSize = 4;
+		byte[] fullBitfield = new byte[bitfieldSize];
 		
-	new Thread(new Runnable() {
-		private String myString;
-		public Runnable init(String p) {
-			this.myString = p;
-			return this;
+		System.out.println(fullBitfield[0] + " "+fullBitfield[1] + " "+fullBitfield[2] + " "+fullBitfield[3]);
+		Arrays.fill(fullBitfield, (byte)-1);
+		System.out.println(fullBitfield[0] + " "+fullBitfield[1] + " "+fullBitfield[2] + " "+fullBitfield[3]);
+		
+		for(int i = 0;i<=spareBits;++i)
+		{
+			fullBitfield[bitfieldSize-1] &= (((byte)-1) << (byte)i) ;
 		}
 		
-		@Override
-	    public void run() {
-	    	synchronized(myString){
-	    	System.out.println("enter thread: " + myString);
-	    	myString.concat("Hello");
-	    	System.out.println("thread: " + myString);
-	    	while(true)
-	    	{}
-	    	}
-	    }
-	}.init(s)).start();
-	
-	try
-	{
-	    Thread.sleep(2000);
+		System.out.println(fullBitfield[0] + " "+fullBitfield[1] + " "+fullBitfield[2] + " "+fullBitfield[3]);
+		
+		byte test = (byte) ( -1 << spareBits );
+		System.out.println(test);
+		
+		BitFieldHandler.test();
 	}
-	catch(InterruptedException ex)
-	{
-	    Thread.currentThread().interrupt();
-	}
-	
-	
-	synchronized(s) {
-	System.out.println(s);
-	}
-	
-	}
-	
 }

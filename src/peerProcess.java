@@ -74,10 +74,28 @@ public class peerProcess {
 		else
 			bitfieldSize = bitfieldSize/8;
 		byte[] bitfield = new byte[bitfieldSize];
+		byte[] fullBitfield = new byte[bitfieldSize];
+		//check if this peer has complete file
+		boolean haveFullFile = false;
+		if( peerInfo.get(peerIndex)[3].equals("1") )
+			haveFullFile = true;
+		//generate last byte of bitfield
+		int spareBits = 8 - (pieceNum % 8);
+		byte sparebits = (byte) ( -1 << spareBits);
 		
+		Arrays.fill(fullBitfield, (byte)-1 );
+		fullBitfield[fullBitfield.length-1] = sparebits;
+		
+		//create myStats
+		MyStats myStats;
+		if(haveFullFile)
+			myStats = new MyStats(peerInfo.get(peerIndex)[0], fullBitfield, haveFullFile, sparebits);
+		else
+			myStats = new MyStats(peerInfo.get(peerIndex)[0], bitfield, haveFullFile, sparebits);
+			
 		System.out.println("\nConnecting peers...");
 		
-		chokeTimer.schedule( new ChokeScheduler(k,connectedPeers) ,0,UnchokingInterval * 1000);
+		chokeTimer.schedule( new ChokeScheduler(k,connectedPeers,myStats) ,0,UnchokingInterval * 1000);
 		optimisticTimer.schedule( new OptimisticScheduler(connectedPeers), 0, OptimisticUnchokingInterval * 1000 );
 		
 		//portNum = getConnection(peerID, portNum);
@@ -93,7 +111,7 @@ public class peerProcess {
 			stats = new Stats(peerInfo.get(peerNum-1)[0]);
 			
 			//new Thread(new Send(peer)).start();
-			new Thread( new Receive(peer, peerInfo.get(peerIndex)[0], stats,connectedPeers) ).start();
+			new Thread( new Receive(peer, myStats, stats,connectedPeers) ).start();
 		}
 
 		portNum = Integer.parseInt(peerInfo.get(peerIndex)[2]);
@@ -108,7 +126,7 @@ public class peerProcess {
 			connectedPeers.add(stats);
 			
 			//new Thread(new Send(server)).start();
-			new Thread( new Receive(server, peerInfo.get(peerIndex)[0], stats,connectedPeers) ).start();
+			new Thread( new Receive(server, myStats, stats,connectedPeers) ).start();
 			i++;
 		}
 		
