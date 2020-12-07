@@ -106,18 +106,25 @@ public class Receive implements Runnable{
         		connectedPeer.chokeMe = false;
         		//unchoking log
 				Log.unchokingLog(myStats.peerID, connectedPeer.peerID);
-        		if( !myStats.downloadFinished && BitFieldHandler.interested(connectedPeer.bitfield, myStats.bitfield)  && (lastRequest < 0) )
+        		if( !myStats.downloadFinished && BitFieldHandler.interested(connectedPeer.bitfield, myStats.bitfield))
         		{
-        			int request = BitFieldHandler.selectPiece(connectedPeer.bitfield,myStats.bitfield );
-        			if(request != -1)
-        			{
-        				synchronized(dos)
-            			{
-            				SendMessage.sendRequest(dos,request);
-            			}
-        				lastRequest = request;
-        				startTime = System.nanoTime();
-        			}
+					if (lastRequest < 0) {
+						int request = BitFieldHandler.selectPiece(connectedPeer.bitfield, myStats.bitfield);
+						if (request != -1) {
+							synchronized (dos) {
+								SendMessage.sendRequest(dos, request);
+							}
+							lastRequest = request;
+							startTime = System.nanoTime();
+						}
+					}
+					else
+					{
+						synchronized (dos) {
+							SendMessage.sendRequest(dos, lastRequest);
+						}
+						startTime = System.nanoTime();
+					}
         		}
         		break;
         	
