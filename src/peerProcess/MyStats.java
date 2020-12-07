@@ -10,6 +10,7 @@ public class MyStats {
 	public byte sparebits;
 	public boolean downloadFinished;
 	public boolean haveFullFile;
+	public boolean allPeerFinished = false;
 	public List<String> destPaths;
 	public int pieceNum;
 	public int fileSize;

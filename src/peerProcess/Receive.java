@@ -214,7 +214,8 @@ public class Receive implements Runnable{
         		
         		
         		PieceManager.toFile(readMessage.piece, myStats.destPaths, readMessage.pieceIndex);
-        		
+        		BitFieldHandler.setBit(myStats.bitfield, readMessage.pieceIndex);
+				pieceHave ++;
         		
         		if ( BitFieldHandler.downloadFinished(myStats.bitfield, myStats.sparebits) ){
 					myStats.downloadFinished = true;
@@ -228,9 +229,7 @@ public class Receive implements Runnable{
 					}
 				}
 
-        		BitFieldHandler.setBit(myStats.bitfield, readMessage.pieceIndex);
-        		//downloading a piece log
-				pieceHave ++;
+				//downloading a piece log
 				Log.downloadingLog(myStats.peerID, connectedPeer.peerID, readMessage.pieceIndex, pieceHave);
 
         		// send have messages
@@ -268,6 +267,21 @@ public class Receive implements Runnable{
         		}
         		break;
         	}
+        	
+        	//closing program
+        	if(myStats.allPeerFinished)
+        		release();
+        	closeProgram:{
+        		for(int i = 0; i < allConnectedPeers.size(); ++i)
+        		{
+        			if (!allConnectedPeers.get(i).completeFile)
+        				break closeProgram;
+        		}
+        		if(myStats.downloadFinished) {
+        			release();
+        		}
+        	}
+        	
         }
     }
 }

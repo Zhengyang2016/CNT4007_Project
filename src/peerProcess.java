@@ -121,8 +121,8 @@ public class peerProcess {
 		portNum = Integer.parseInt(peerInfo.get(peerIndex)[2]);
 		System.out.println("\nWaiting for connections on port " + portNum  + "..." );
 		ServerSocket serverSocket = new ServerSocket(portNum);
-		int i = 1;
-		while (true) {
+		
+		for (int i = 1; i < peerInfo.size() - peerIndex; ++i) {
 			Socket server = serverSocket.accept();
 			System.out.println("Get one connection");
 			
@@ -134,8 +134,15 @@ public class peerProcess {
 			
 			//new Thread(new Send(server)).start();
 			new Thread( new Receive(server, myStats, stats,connectedPeers) ).start();
-			i++;
 		}
+		
+		while(!myStats.allPeerFinished){
+		}
+		
+		chokeTimer.cancel();
+		optimisticTimer.cancel();
+		
+		
 		
 	}
 
