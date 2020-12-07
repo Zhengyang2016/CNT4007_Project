@@ -113,7 +113,9 @@ public class peerProcess {
 			stats = new Stats(peerInfo.get(peerNum-1)[0]);
 			
 			//new Thread(new Send(peer)).start();
-			new Thread( new Receive(peer, myStats, stats, connectedPeers) ).start();
+			Thread t = new Thread( new Receive(peer, myStats, stats, connectedPeers) );
+			t.setDaemon(true);
+			t.start();
 			//connection log
 			Log.connectionLog(peerID, peerInfo.get(peerNum-1)[0]);
 		}
@@ -133,16 +135,22 @@ public class peerProcess {
 			Log.connectedLog(peerID, peerInfo.get(peerIndex+i)[0]);
 			
 			//new Thread(new Send(server)).start();
-			new Thread( new Receive(server, myStats, stats,connectedPeers) ).start();
+			Thread t = new Thread( new Receive(server, myStats, stats,connectedPeers) );
+			t.setDaemon(true);
+			t.start();
 		}
 		
 		while(!myStats.allPeerFinished){
 		}
 		
+		System.out.println("------------------Closing Timers-------------------");
+		
 		chokeTimer.cancel();
+		chokeTimer.purge();
 		optimisticTimer.cancel();
+		optimisticTimer.purge();
 		
-		
+		System.out.println("-------------------Finished-------------------");
 		
 	}
 

@@ -13,8 +13,9 @@ public class Stats {
 	public volatile boolean chokeMe = true;
 	public volatile float speed = -1;
 	public byte[] bitfield;
-	public boolean completeFile;
+	public volatile boolean completeFile;
 	public DataOutputStream out;
+	public volatile int lastRequest = -1;
 	
 	public Stats(String ID){
 		this.peerID = ID;

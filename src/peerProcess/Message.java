@@ -14,7 +14,7 @@ public class Message {
 	public int request;
 	public int pieceIndex;
 	public byte[] piece;
-	
+	public String ID;
 	//constructer needs the socket inputstream.
 	Message(InputStream in){
 		this.in = in;
@@ -47,6 +47,7 @@ public class Message {
 				}
 				String peerID = new String(bytes);
 				System.out.println("PeerID of handshake: " + peerID);
+				this.ID = peerID;
 				return peerID;
 			}
 			else
@@ -73,7 +74,7 @@ public class Message {
 					bytes[i] = (byte)read;
 			}
 			length = ByteBuffer.wrap(bytes).getInt();//convert 4 bytes to integer
-			System.out.print("Message length: " + length);
+			System.out.print("From" + ID+ "-  Message length: " + length);
 		}catch(IOException e) {
 			System.out.println("Get message length failed.");
 			throw e;

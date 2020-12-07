@@ -8,14 +8,14 @@ public class MyStats {
 	public String fileName;
 	public byte[] bitfield;
 	public byte sparebits;
-	public boolean downloadFinished;
+	public volatile boolean downloadFinished;
 	public boolean haveFullFile;
-	public boolean allPeerFinished = false;
+	public volatile boolean allPeerFinished = false;
 	public List<String> destPaths;
 	public int pieceNum;
 	public int fileSize;
 	public int pieceSize;
-
+	public volatile int numberOfPiece = 0;
 	
 	public MyStats(String peerID, byte[] bitfield,boolean download,
 				   byte sparebits, String fileName, String destDir,

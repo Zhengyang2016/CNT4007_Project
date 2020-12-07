@@ -23,9 +23,8 @@ public class Receive implements Runnable{
     private Message readMessage;
     private MyStats myStats;
     private long startTime = 0;
-    private int lastRequest = -1;
     private boolean isRunning = true;
-    private int pieceHave = 0;
+//    private int pieceHave = 0;
     
     
     public Receive(Socket peer, MyStats myStats,Stats connectedPeer, ArrayList<Stats> allConnectedPeers){
@@ -48,7 +47,18 @@ public class Receive implements Runnable{
     //Release
     private void release() {
         this.isRunning = false;
-        Utils.close(dis,peer);
+        System.out.println("----"+ connectedPeer.peerID+" thread closing----");
+        closeProgram:{
+    		for(int i = 0; i < allConnectedPeers.size(); ++i)
+    		{
+    			if (!allConnectedPeers.get(i).completeFile)
+    				break closeProgram;
+    		}
+    		if(myStats.downloadFinished) {
+    			myStats.allPeerFinished = true;
+    		}
+    	}
+        //Utils.close(dis,peer);
     }
 
     @Override
@@ -94,10 +104,10 @@ public class Receive implements Runnable{
         		connectedPeer.chokeMe = true;
         		//choking log
         		Log.chokingLog(myStats.peerID, connectedPeer.peerID);
-        		if(lastRequest >= 0)
+        		if(connectedPeer.lastRequest >= 0)
         		{
-        			BitFieldHandler.resetBit(myStats.bitfield, lastRequest);
-        			lastRequest = -1;
+        			BitFieldHandler.resetBit(myStats.bitfield, connectedPeer.lastRequest);
+        			connectedPeer.lastRequest = -1;
         		}
         		break;
         		
@@ -108,20 +118,24 @@ public class Receive implements Runnable{
 				Log.unchokingLog(myStats.peerID, connectedPeer.peerID);
         		if( !myStats.downloadFinished && BitFieldHandler.interested(connectedPeer.bitfield, myStats.bitfield))
         		{
-					if (lastRequest < 0) {
+					if (connectedPeer.lastRequest < 0) {
+						synchronized (allConnectedPeers) {
 						int request = BitFieldHandler.selectPiece(connectedPeer.bitfield, myStats.bitfield);
-						if (request != -1) {
+						connectedPeer.lastRequest = request;
+						}
+						if (connectedPeer.lastRequest != -1) {
 							synchronized (dos) {
-								SendMessage.sendRequest(dos, request);
+								System.out.println("-->-Sending request to" + connectedPeer.peerID);
+								SendMessage.sendRequest(dos, connectedPeer.lastRequest);
 							}
-							lastRequest = request;
 							startTime = System.nanoTime();
 						}
 					}
 					else
 					{
 						synchronized (dos) {
-							SendMessage.sendRequest(dos, lastRequest);
+							System.out.println("-->-Sending connectedPeer.lastRequest to" + connectedPeer.peerID);
+							SendMessage.sendRequest(dos, connectedPeer.lastRequest);
 						}
 						startTime = System.nanoTime();
 					}
@@ -141,14 +155,18 @@ public class Receive implements Runnable{
         		break;
         	
         	case 4://have: update bitfield and send interested/!interested		-complete
-        		
-        		BitFieldHandler.setBit(connectedPeer.bitfield, readMessage.have);
         		//receiving 'have' message log
 				Log.haveLog(myStats.peerID, connectedPeer.peerID, readMessage.have);
-        		if( BitFieldHandler.interested(connectedPeer.bitfield, myStats.bitfield) || lastRequest >= 0)
+				
+        		BitFieldHandler.setBit(connectedPeer.bitfield, readMessage.have);
+        		if(!connectedPeer.completeFile)
+        			connectedPeer.completeFile = BitFieldHandler.downloadFinished( connectedPeer.bitfield, myStats.sparebits);
+        		
+        		if( BitFieldHandler.interested(connectedPeer.bitfield, myStats.bitfield) || connectedPeer.lastRequest >= 0)
         		{
         			synchronized(dos)
         			{
+        				System.out.println("-->-Sending interested to" + connectedPeer.peerID);
         				SendMessage.sendInterested(dos);
         			}
         		}
@@ -156,12 +174,10 @@ public class Receive implements Runnable{
         		{
         			synchronized(dos)
         			{
+        				System.out.println("-->-Sending !interested to" + connectedPeer.peerID);
         				SendMessage.sendNotInterested(dos);
         			}
         		}
-        		
-        		if(!connectedPeer.completeFile)
-        			connectedPeer.completeFile = BitFieldHandler.downloadFinished( connectedPeer.bitfield, myStats.sparebits);
         		
         		break;
         	
@@ -172,6 +188,7 @@ public class Receive implements Runnable{
         		{
         			synchronized(dos)
         			{
+        				System.out.println("-->-Sending interested to" + connectedPeer.peerID);
         				SendMessage.sendInterested(dos);
         			}
         		}
@@ -179,6 +196,7 @@ public class Receive implements Runnable{
         		{
         			synchronized(dos)
         			{
+        				System.out.println("-->-Sending !interested to" + connectedPeer.peerID);
         				SendMessage.sendNotInterested(dos);
         			}
         		}
@@ -206,8 +224,7 @@ public class Receive implements Runnable{
         			//put into file.
         			//update own bitfield, send have to all other peers and decide whether to send 	     -complete
         			//not interested to other peers, then send next request to peer if peer does not choke me  -complete
-        		lastRequest = -1;
-        		
+
         		long endTime = System.nanoTime();
         		long downloadTime = (endTime - startTime) / 1000000;//in millisecond
         		connectedPeer.speed = (readMessage.length - 1) / downloadTime;// byte/millisecond
@@ -215,38 +232,53 @@ public class Receive implements Runnable{
         		
         		PieceManager.toFile(readMessage.piece, myStats.destPaths, readMessage.pieceIndex);
         		BitFieldHandler.setBit(myStats.bitfield, readMessage.pieceIndex);
-				pieceHave ++;
-        		
-        		if ( BitFieldHandler.downloadFinished(myStats.bitfield, myStats.sparebits) ){
-					myStats.downloadFinished = true;
-					Log.completionLog(myStats.peerID);
-					try {
-						String src = myStats.destDir + myStats.fileName;
-						PieceManager.merge(src, myStats.destPaths);
-					} catch (IOException e) {
-						System.out.println("Merge failed");
-						e.printStackTrace();
-					}
-				}
+				myStats.numberOfPiece ++;
+
 
 				//downloading a piece log
-				Log.downloadingLog(myStats.peerID, connectedPeer.peerID, readMessage.pieceIndex, pieceHave);
-
+				Log.downloadingLog(myStats.peerID, connectedPeer.peerID, readMessage.pieceIndex, myStats.numberOfPiece);
+				
         		// send have messages
         		for(int i = 0; i < allConnectedPeers.size();++i)
         		{
         			synchronized(allConnectedPeers.get(i).out)
     				{
+        				System.out.println("-->-Sending Have to" + allConnectedPeers.get(i).peerID);
     					SendMessage.sendHave(allConnectedPeers.get(i).out, readMessage.pieceIndex);
     				}
         		}
+        		
+        		
+        		
+				synchronized (allConnectedPeers) {
+					connectedPeer.lastRequest = -1;
+					merge: {
+						for (int i = 0; i < allConnectedPeers.size(); ++i) {
+							if (allConnectedPeers.get(i).lastRequest > 0)
+								break merge;
+						}
+						if (BitFieldHandler.downloadFinished(myStats.bitfield, myStats.sparebits)) {
+							myStats.downloadFinished = true;
+							Log.completionLog(myStats.peerID);
+							try {
+								String src = myStats.destDir + myStats.fileName;
+								PieceManager.merge(src, myStats.destPaths);
+							} catch (IOException e) {
+								System.out.println("Merge failed");
+								e.printStackTrace();
+							}
+						}
+					}
+				}
+        		
         		//send not interested messages
         		for(int i = 0; i < allConnectedPeers.size();++i)
         		{	
-        			if( !BitFieldHandler.interested(allConnectedPeers.get(i).bitfield, myStats.bitfield) )
+        			if( (allConnectedPeers.get(i).lastRequest<0) && !BitFieldHandler.interested(allConnectedPeers.get(i).bitfield, myStats.bitfield) )
         			{
         				synchronized(allConnectedPeers.get(i).out)
         				{
+        					System.out.println("-->-Sending !interested to" + connectedPeer.peerID);
         					SendMessage.sendNotInterested(allConnectedPeers.get(i).out);
         				}
         			}
@@ -254,14 +286,18 @@ public class Receive implements Runnable{
         		// send next request
         		if( !myStats.downloadFinished && !connectedPeer.chokeMe && BitFieldHandler.interested(connectedPeer.bitfield, myStats.bitfield) )
         		{
-        			int request = BitFieldHandler.selectPiece(connectedPeer.bitfield,myStats.bitfield );
-        			if(request != -1)
+        			synchronized (allConnectedPeers) {
+    	       			int request = BitFieldHandler.selectPiece(connectedPeer.bitfield,myStats.bitfield );
+    	       			connectedPeer.lastRequest = request;
+        			}
+    	       		if(connectedPeer.lastRequest != -1)
         			{
         				synchronized(dos)
             			{
-            				SendMessage.sendRequest(dos,request);
+        					System.out.println("-->-Sending request to" + connectedPeer.peerID);
+            				SendMessage.sendRequest(dos,connectedPeer.lastRequest);
             			}
-        				lastRequest = request;
+
         				startTime = System.nanoTime();
         			}
         		}
@@ -270,7 +306,7 @@ public class Receive implements Runnable{
         	
         	//closing program
         	if(myStats.allPeerFinished)
-        		release();
+        		this.isRunning = false;
         	closeProgram:{
         		for(int i = 0; i < allConnectedPeers.size(); ++i)
         		{
@@ -278,7 +314,10 @@ public class Receive implements Runnable{
         				break closeProgram;
         		}
         		if(myStats.downloadFinished) {
-        			release();
+        			synchronized (allConnectedPeers) {
+        				myStats.allPeerFinished = true;
+        				this.isRunning = false;
+        			}
         		}
         	}
         	
