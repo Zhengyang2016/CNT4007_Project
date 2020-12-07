@@ -18,7 +18,7 @@ public class peerProcess {
 		int FileSize;
 		int PieceSize;
 		String peerID = args[0];
-		int k = Integer.parseInt(args[1]);
+		
 		int peerIndex;//the position of this peer in the configuration file
 
 		ArrayList<String[]> peerInfo = new ArrayList<String[]>();
@@ -97,7 +97,7 @@ public class peerProcess {
 			
 		System.out.println("\nConnecting peers...");
 		
-		chokeTimer.schedule( new ChokeScheduler(k,connectedPeers,myStats) ,0,UnchokingInterval * 1000);
+		chokeTimer.schedule( new ChokeScheduler(NumberOfPreferredNeighbors,connectedPeers,myStats) ,0,UnchokingInterval * 1000);
 		optimisticTimer.schedule( new OptimisticScheduler(connectedPeers, myStats), 0, OptimisticUnchokingInterval * 1000 );
 		
 		//portNum = getConnection(peerID, portNum);
@@ -127,7 +127,7 @@ public class peerProcess {
 			System.out.println("Get one connection");
 			
 			stats = new Stats(peerInfo.get(peerIndex+i)[0]);
-			connectedPeers.add(stats);
+			//connectedPeers.add(stats);
 
 			//connected log
 			Log.connectedLog(peerID, peerInfo.get(peerIndex+i)[0]);

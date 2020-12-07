@@ -1,0 +1,131 @@
+At 09:16:53:134 : Peer 1002 makes a connection to Peer 1001.
+At 09:16:53:135 : Peer 1002 received the ‘not interested’ message from 1001.
+At 09:16:53:134 : Peer 1002 has the preferred neighbors null, null.
+At 09:16:56:489 : Peer 1002 is unchoked by 1001.
+At 09:16:56:496 : Peer 1002 is unchoked by 1001.
+At 09:16:56:518 : Peer 1002 has downloaded the piece 1 from 1001. Now the number of pieces it has is 1.
+At 09:16:56:521 : Peer 1002 received the ‘not interested’ message from 1001.
+At 09:16:56:535 : Peer 1002 has downloaded the piece 2 from 1001. Now the number of pieces it has is 2.
+At 09:16:56:538 : Peer 1002 received the ‘not interested’ message from 1001.
+At 09:16:56:546 : Peer 1002 has downloaded the complete file.
+At 09:16:56:550 : Peer 1002 has downloaded the piece 0 from 1001. Now the number of pieces it has is 3.
+At 09:16:56:552 : Peer 1002 received the ‘not interested’ message from 1001.
+At 09:16:56:992 : Peer 1002 is connected from Peer 1003.
+At 09:16:57:010 : Peer 1002 received the ‘interested’ message from 1003.
+At 09:16:58:014 : Peer 1002 has the preferred neighbors 1003, 1003.
+At 09:16:58:035 : Peer 1002 received the ‘have’ message from 1003 for the piece 1.
+At 09:16:58:052 : Peer 1002 received the ‘have’ message from 1003 for the piece 0.
+At 09:16:58:082 : Peer 1002 received the ‘have’ message from 1003 for the piece 2.
+At 09:16:58:087 : Peer 1002 received the ‘not interested’ message from 1003.
+At 09:17:02:357 : Peer 1002 is connected from Peer 1004.
+At 09:17:02:367 : Peer 1002 received the ‘interested’ message from 1004.
+At 09:17:03:018 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:17:03:104 : Peer 1002 received the ‘have’ message from 1004 for the piece 0.
+At 09:17:03:135 : Peer 1002 received the ‘have’ message from 1004 for the piece 1.
+At 09:17:03:173 : Peer 1002 received the ‘have’ message from 1004 for the piece 2.
+At 09:17:03:176 : Peer 1002 received the ‘not interested’ message from 1004.
+At 09:17:08:016 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:17:11:483 : Peer 1002 is choked by 1001.
+At 09:17:13:017 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:17:18:018 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:17:23:017 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:17:28:017 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:17:33:019 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:17:38:017 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:17:43:019 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:17:48:019 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:17:53:019 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:17:58:021 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:18:03:021 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:18:08:021 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:18:13:022 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:18:18:023 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:18:23:020 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:18:28:023 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:18:33:024 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:18:38:024 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:18:43:026 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:18:48:026 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:18:53:025 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:18:58:027 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:19:03:032 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:19:08:028 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:19:13:029 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:19:18:038 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:19:23:030 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:19:28:030 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:19:33:032 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:19:38:030 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:19:43:034 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:19:48:033 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:19:53:033 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:19:58:035 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:20:03:034 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:20:08:036 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:20:13:037 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:20:18:034 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:20:23:036 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:20:28:036 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:20:33:036 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:20:38:037 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:20:43:039 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:20:48:038 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:20:53:041 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:20:58:040 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:21:03:043 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:21:08:041 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:21:13:041 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:21:18:040 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:21:23:040 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:21:28:041 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:21:33:046 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:21:38:042 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:21:43:047 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:21:48:041 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:21:53:043 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:21:58:044 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:22:03:044 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:22:08:044 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:22:13:046 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:22:18:048 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:22:23:047 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:22:28:048 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:22:33:053 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:22:38:048 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:22:43:049 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:22:48:048 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:22:53:051 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:22:58:049 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:23:03:051 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:23:08:052 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:23:13:055 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:23:18:052 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:23:23:052 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:23:28:052 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:23:33:053 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:23:38:054 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:23:43:055 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:23:48:056 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:23:53:056 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:23:58:056 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:24:03:057 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:24:08:057 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:24:13:060 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:24:18:060 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:24:23:060 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:24:28:060 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:24:33:062 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:24:38:063 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:24:43:063 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:24:48:063 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:24:53:064 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:24:58:064 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:25:03:065 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:25:08:068 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:25:13:068 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:25:18:068 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:25:23:068 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:25:28:069 : Peer 1002 has the preferred neighbors 1004, 1004.
+At 09:25:28:094 : Peer 1002 received the ‘not interested’ message from 1004.
+At 09:25:32:760 : Peer 1002 received the ‘not interested’ message from 1003.
+At 09:25:33:069 : Peer 1002 has the preferred neighbors 1004, 1004.

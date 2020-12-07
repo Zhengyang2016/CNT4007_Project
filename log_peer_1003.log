@@ -1,0 +1,127 @@
+At 09:16:57:073 : Peer 1003 has the preferred neighbors null, null.
+At 09:16:57:073 : Peer 1003 received the ‘not interested’ message from 1002.
+At 09:16:57:071 : Peer 1003 makes a connection to Peer 1002.
+At 09:16:57:081 : Peer 1003 makes a connection to Peer 1001.
+At 09:16:57:092 : Peer 1003 received the ‘not interested’ message from 1001.
+At 09:16:58:014 : Peer 1003 is unchoked by 1002.
+At 09:16:58:032 : Peer 1003 has downloaded the piece 1 from 1002. Now the number of pieces it has is 1.
+At 09:16:58:037 : Peer 1003 received the ‘not interested’ message from 1002.
+At 09:16:58:037 : Peer 1003 received the ‘not interested’ message from 1001.
+At 09:16:58:048 : Peer 1003 has downloaded the piece 0 from 1002. Now the number of pieces it has is 2.
+At 09:16:58:054 : Peer 1003 received the ‘not interested’ message from 1001.
+At 09:16:58:054 : Peer 1003 received the ‘not interested’ message from 1002.
+At 09:16:58:075 : Peer 1003 has downloaded the complete file.
+At 09:16:58:079 : Peer 1003 has downloaded the piece 2 from 1002. Now the number of pieces it has is 3.
+At 09:16:58:085 : Peer 1003 received the ‘not interested’ message from 1002.
+At 09:16:58:085 : Peer 1003 received the ‘not interested’ message from 1001.
+At 09:17:01:969 : Peer 1003 has the preferred neighbors null, null.
+At 09:17:02:288 : Peer 1003 is connected from Peer 1004.
+At 09:17:02:298 : Peer 1003 received the ‘interested’ message from 1004.
+At 09:17:03:026 : Peer 1003 is choked by 1002.
+At 09:17:03:103 : Peer 1003 received the ‘have’ message from 1004 for the piece 0.
+At 09:17:03:124 : Peer 1003 received the ‘have’ message from 1004 for the piece 1.
+At 09:17:03:167 : Peer 1003 received the ‘have’ message from 1004 for the piece 2.
+At 09:17:03:173 : Peer 1003 received the ‘not interested’ message from 1004.
+At 09:17:06:969 : Peer 1003 has the preferred neighbors null, null.
+At 09:17:11:972 : Peer 1003 has the preferred neighbors null, null.
+At 09:17:16:972 : Peer 1003 has the preferred neighbors null, null.
+At 09:17:21:971 : Peer 1003 has the preferred neighbors null, null.
+At 09:17:26:973 : Peer 1003 has the preferred neighbors null, null.
+At 09:17:31:973 : Peer 1003 has the preferred neighbors null, null.
+At 09:17:36:973 : Peer 1003 has the preferred neighbors null, null.
+At 09:17:41:973 : Peer 1003 has the preferred neighbors null, null.
+At 09:17:46:973 : Peer 1003 has the preferred neighbors null, null.
+At 09:17:51:973 : Peer 1003 has the preferred neighbors null, null.
+At 09:17:56:973 : Peer 1003 has the preferred neighbors null, null.
+At 09:18:01:974 : Peer 1003 has the preferred neighbors null, null.
+At 09:18:06:973 : Peer 1003 has the preferred neighbors null, null.
+At 09:18:11:975 : Peer 1003 has the preferred neighbors null, null.
+At 09:18:16:977 : Peer 1003 has the preferred neighbors null, null.
+At 09:18:21:977 : Peer 1003 has the preferred neighbors null, null.
+At 09:18:26:977 : Peer 1003 has the preferred neighbors null, null.
+At 09:18:31:979 : Peer 1003 has the preferred neighbors null, null.
+At 09:18:36:979 : Peer 1003 has the preferred neighbors null, null.
+At 09:18:41:978 : Peer 1003 has the preferred neighbors null, null.
+At 09:18:46:979 : Peer 1003 has the preferred neighbors null, null.
+At 09:18:51:979 : Peer 1003 has the preferred neighbors null, null.
+At 09:18:56:978 : Peer 1003 has the preferred neighbors null, null.
+At 09:19:01:979 : Peer 1003 has the preferred neighbors null, null.
+At 09:19:06:979 : Peer 1003 has the preferred neighbors null, null.
+At 09:19:11:981 : Peer 1003 has the preferred neighbors null, null.
+At 09:19:16:980 : Peer 1003 has the preferred neighbors null, null.
+At 09:19:21:984 : Peer 1003 has the preferred neighbors null, null.
+At 09:19:26:986 : Peer 1003 has the preferred neighbors null, null.
+At 09:19:31:986 : Peer 1003 has the preferred neighbors null, null.
+At 09:19:36:987 : Peer 1003 has the preferred neighbors null, null.
+At 09:19:41:986 : Peer 1003 has the preferred neighbors null, null.
+At 09:19:46:986 : Peer 1003 has the preferred neighbors null, null.
+At 09:19:51:987 : Peer 1003 has the preferred neighbors null, null.
+At 09:19:56:987 : Peer 1003 has the preferred neighbors null, null.
+At 09:20:01:988 : Peer 1003 has the preferred neighbors null, null.
+At 09:20:06:988 : Peer 1003 has the preferred neighbors null, null.
+At 09:20:11:988 : Peer 1003 has the preferred neighbors null, null.
+At 09:20:16:986 : Peer 1003 has the preferred neighbors null, null.
+At 09:20:21:988 : Peer 1003 has the preferred neighbors null, null.
+At 09:20:26:985 : Peer 1003 has the preferred neighbors null, null.
+At 09:20:31:989 : Peer 1003 has the preferred neighbors null, null.
+At 09:20:36:988 : Peer 1003 has the preferred neighbors null, null.
+At 09:20:41:992 : Peer 1003 has the preferred neighbors null, null.
+At 09:20:46:989 : Peer 1003 has the preferred neighbors null, null.
+At 09:20:51:990 : Peer 1003 has the preferred neighbors null, null.
+At 09:20:56:990 : Peer 1003 has the preferred neighbors null, null.
+At 09:21:01:991 : Peer 1003 has the preferred neighbors null, null.
+At 09:21:06:991 : Peer 1003 has the preferred neighbors null, null.
+At 09:21:11:992 : Peer 1003 has the preferred neighbors null, null.
+At 09:21:16:993 : Peer 1003 has the preferred neighbors null, null.
+At 09:21:21:994 : Peer 1003 has the preferred neighbors null, null.
+At 09:21:26:991 : Peer 1003 has the preferred neighbors null, null.
+At 09:21:31:998 : Peer 1003 has the preferred neighbors null, null.
+At 09:21:36:997 : Peer 1003 has the preferred neighbors null, null.
+At 09:21:41:997 : Peer 1003 has the preferred neighbors null, null.
+At 09:21:46:997 : Peer 1003 has the preferred neighbors null, null.
+At 09:21:52:000 : Peer 1003 has the preferred neighbors null, null.
+At 09:21:57:000 : Peer 1003 has the preferred neighbors null, null.
+At 09:22:02:000 : Peer 1003 has the preferred neighbors null, null.
+At 09:22:06:999 : Peer 1003 has the preferred neighbors null, null.
+At 09:22:12:001 : Peer 1003 has the preferred neighbors null, null.
+At 09:22:17:002 : Peer 1003 has the preferred neighbors null, null.
+At 09:22:22:001 : Peer 1003 has the preferred neighbors null, null.
+At 09:22:27:003 : Peer 1003 has the preferred neighbors null, null.
+At 09:22:32:006 : Peer 1003 has the preferred neighbors null, null.
+At 09:22:37:005 : Peer 1003 has the preferred neighbors null, null.
+At 09:22:42:005 : Peer 1003 has the preferred neighbors null, null.
+At 09:22:47:004 : Peer 1003 has the preferred neighbors null, null.
+At 09:22:52:006 : Peer 1003 has the preferred neighbors null, null.
+At 09:22:57:006 : Peer 1003 has the preferred neighbors null, null.
+At 09:23:02:007 : Peer 1003 has the preferred neighbors null, null.
+At 09:23:07:007 : Peer 1003 has the preferred neighbors null, null.
+At 09:23:12:007 : Peer 1003 has the preferred neighbors null, null.
+At 09:23:17:006 : Peer 1003 has the preferred neighbors null, null.
+At 09:23:22:008 : Peer 1003 has the preferred neighbors null, null.
+At 09:23:27:008 : Peer 1003 has the preferred neighbors null, null.
+At 09:23:32:008 : Peer 1003 has the preferred neighbors null, null.
+At 09:23:37:008 : Peer 1003 has the preferred neighbors null, null.
+At 09:23:42:009 : Peer 1003 has the preferred neighbors null, null.
+At 09:23:47:009 : Peer 1003 has the preferred neighbors null, null.
+At 09:23:52:009 : Peer 1003 has the preferred neighbors null, null.
+At 09:23:57:009 : Peer 1003 has the preferred neighbors null, null.
+At 09:24:02:012 : Peer 1003 has the preferred neighbors null, null.
+At 09:24:07:011 : Peer 1003 has the preferred neighbors null, null.
+At 09:24:12:010 : Peer 1003 has the preferred neighbors null, null.
+At 09:24:17:013 : Peer 1003 has the preferred neighbors null, null.
+At 09:24:22:014 : Peer 1003 has the preferred neighbors null, null.
+At 09:24:27:014 : Peer 1003 has the preferred neighbors null, null.
+At 09:24:32:014 : Peer 1003 has the preferred neighbors null, null.
+At 09:24:37:014 : Peer 1003 has the preferred neighbors null, null.
+At 09:24:42:013 : Peer 1003 has the preferred neighbors null, null.
+At 09:24:47:014 : Peer 1003 has the preferred neighbors null, null.
+At 09:24:52:013 : Peer 1003 has the preferred neighbors null, null.
+At 09:24:57:014 : Peer 1003 has the preferred neighbors null, null.
+At 09:25:02:014 : Peer 1003 has the preferred neighbors null, null.
+At 09:25:07:016 : Peer 1003 has the preferred neighbors null, null.
+At 09:25:12:016 : Peer 1003 has the preferred neighbors null, null.
+At 09:25:17:014 : Peer 1003 has the preferred neighbors null, null.
+At 09:25:22:017 : Peer 1003 has the preferred neighbors null, null.
+At 09:25:27:017 : Peer 1003 has the preferred neighbors null, null.
+At 09:25:28:093 : Peer 1003 received the ‘not interested’ message from 1004.
+At 09:25:32:016 : Peer 1003 has the preferred neighbors null, null.
