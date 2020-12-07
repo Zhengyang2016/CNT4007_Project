@@ -12,7 +12,7 @@ public class Log {
 
     public static void log(String msg, String peerID){
         //Create log
-        File src = new File("log_peer_"+peerID+".log");
+        File src = new File("src/log_peer_"+peerID+".log");
         try {
             src.createNewFile();
         } catch (IOException e) {
