@@ -7,12 +7,14 @@ public class ChokeScheduler extends TimerTask{
 	public ArrayList<Stats> connectedPeers;
 	public int k;
 	public MyStats myStats;
+	public String[] preferredNeighbor;
 	
 	public ChokeScheduler(int k, ArrayList<Stats> connectedPeers, MyStats myStats)
 	{
 		this.k = k;
 		this.connectedPeers = connectedPeers;
 		this.myStats = myStats;
+		this.preferredNeighbor = new String[k];
 	}
 	
 	public void run() 
@@ -44,8 +46,10 @@ public class ChokeScheduler extends TimerTask{
 				}
 				chokePeers.remove(interestedPeers.get(i));
 				System.out.println("-Preferred neighbors: " + interestedPeers.get(i).peerID);
+				preferredNeighbor[i] = interestedPeers.get(i).peerID;
 			}
-			
+			//change of preferred neighbors log
+			Log.preferredNeighborsLog(myStats.peerID, preferredNeighbor);
 		}
 		// randomly choose preferred neighbors when having complete file
 		else if (myStats.downloadFinished)
@@ -60,7 +64,10 @@ public class ChokeScheduler extends TimerTask{
 				}
 				chokePeers.remove(interestedPeers.get(i));
 				System.out.println("-Preferred neighbors: " + interestedPeers.get(i).peerID);
+				preferredNeighbor[i] = interestedPeers.get(i).peerID;
 			}
+			//change of preferred neighbors log
+			Log.preferredNeighborsLog(myStats.peerID, preferredNeighbor);
 		}
 		//else sort interested neighbors by speed in descending order, unchoke first k neighbors
 		else
@@ -80,8 +87,10 @@ public class ChokeScheduler extends TimerTask{
 				}
 				chokePeers.remove(interestedPeers.get(i));
 				System.out.println("-Preferred neighbors: " + interestedPeers.get(i).peerID);
+				preferredNeighbor[i] = interestedPeers.get(i).peerID;
 			}
-			
+			//change of preferred neighbors log
+			Log.preferredNeighborsLog(myStats.peerID, preferredNeighbor);
 		}
 		//choke the rest peers
 		for(int i = 0; i < chokePeers.size(); ++i)
