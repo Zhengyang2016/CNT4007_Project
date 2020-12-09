@@ -18,8 +18,11 @@ public class StartRemotePeers {
 		for (String peerId : peers.keySet()) {
 			String hostname = peers.get(peerId);
 			
+			//Process serverProcess=Runtime.getRuntime().exec(
+			//		"ssh -i ~/.ssh/private.pem " + hostname + " cd " + workingDir + " ; "
+			//				+ peerProcessName + " " + peerId);
 			Process serverProcess=Runtime.getRuntime().exec(
-					"ssh -i ~/.ssh/private.pem " + hostname + " cd " + workingDir + " ; "
+					"ssh " + hostname + " cd " + workingDir + " ; "
 							+ peerProcessName + " " + peerId);
 			
 			outputDisplayer outputDisplayer = new outputDisplayer(peerId, new BufferedReader(new InputStreamReader(serverProcess.getInputStream()))  );
